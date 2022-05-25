@@ -37,3 +37,10 @@ cargo build -p risingwave_cmd_all -p risedev -p risingwave_regress_test --profil
 echo "--- Compress RisingWave debug info"
 objcopy --compress-debug-sections=zlib-gnu target/"$target"/risingwave
 
+echo "--- Upload artifacts"
+cp target/"$target"/risingwave ./risingwave-"$profile"
+cp target/"$target"/risedev-playground ./risedev-playground-"$profile"
+cp target/"$target"/risingwave_regress_test ./risingwave_regress_test-"$profile"
+buildkite-agent artifact upload risingwave-"$profile"
+buildkite-agent artifact upload risedev-playground-"$profile"
+buildkite-agent artifact upload risingwave_regress_test-"$profile"
